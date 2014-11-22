@@ -4,15 +4,17 @@
 using namespace std;
 
 BST::BST()
+   : root(NULL),
+     size = 0
 {
-	root = NULL;
-	size = 0;
+	// anytime you can, you should do your init like I have here before the curly braces.
 }
 
 BST::BST(data * ptrItem)
+   : root(NULL), 
+     size(0)
 {
-	root = NULL;
-	size = 0;
+	// not sure what the point of these are ...
 	data * currData;
 	char * name;
 	char * phone;
@@ -23,31 +25,42 @@ BST::BST(data * ptrItem)
 }
 
 BST::BST(const BST& aTree)
+  : root(NULL)
+    size(0)
 {
-	root = NULL;
-	size = aTree.size;
+	// WHOA don't do this are you nutz =p?
 
-	*this = aTree;
+	// do something more like this
+	// I'm not sure what you're trying to do, you're either doing
+	// 1) creating a new BST that references the "SAME" tree as aTree (unlikey)
+	// 2) creating a new BST that is a COPY of the tree in aTree (likely)
+	// 2 is more likely because if you perform #1 any operation performed on aTree affects your new tree cause
+	// they point to the same memory, usually not what you want.
+	
+	// to peform #1 you'd just set this.root = aTree.root;
+	
+	// To perform #2, you'd walk aTree's tree and copy each element into "this"'s tree
 }
 
 const BST& BST::operator= (const BST& aTree)
 {
-	if (this == &aTree)
+	if (this != &aTree)
 	{
-		return *this;
-	}
-	else
-	{
-		//release dynamically allocated memory for current object
-		destroyTree(root);
-
+		// Yikes don't do this either!
+		// you don't want to destroy the object on the right hand side of the equal sign.
+		// thats like saying
+		int a = 7;
+		int b = a;  // and then you expect "a" to be zero.
+	
+	
 		//copy the tree
 		copyTree(root, aTree.root);
-		return *this;
 	}
+	return *this;
 }
 
-void BST::copyTree(treeNode*& newRoot, treeNode * root)
+
+void BST::copyTree(treeNode*& newRoot /* a pointer to a reference?  Do you hate your sanity? */, treeNode * root)
 {
 	if (root)
 	{
@@ -67,14 +80,15 @@ BST::~BST()
 	destroyTree(root);
 }
 
-void BST::destroyTree(treeNode *& root)
+void BST::destroyTree(treeNode *& /* again this is nutter butters */ root)
 {
 	if (root)
 	{
 		destroyTree(root->left);
 		destroyTree(root->right);
 		delete root;
-		root = NULL;
+	
+	 // not needed, C++ delete automatically sets pointers to null after delete (not true in plain old C)
 	}
 }
 
