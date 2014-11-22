@@ -3,7 +3,7 @@
 
 #include "data.h"
 
-struct treeNode
+struct TreeNode
 {
 	data item;
 	treeNode * left, *right;
