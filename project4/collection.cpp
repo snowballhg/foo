@@ -58,8 +58,7 @@ const collection& collection::operator= (const collection& aVendor)
 
 collection::~collection()
 {
-	vendorTree.~BST;
-	productTable.~hashTable;
+	
 }
 
 void collection::add(const data& aVendor)
