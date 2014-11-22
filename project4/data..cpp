@@ -51,34 +51,39 @@ const data& data::operator= (const data& vendor)
 //destructor
 data::~data()
 {
-	if(name)
+	// you don't have to check if your pointers are non-null in C++ if you are just calling delete, in "C" you must do this before you call free()
 		delete[] name;
-	if (phone)
 		delete[] phone;
-	if (product)
 		delete[] product;
-	if (events)
 		delete[] events;
 }
 
 //accessor functions
 void data::getName(char * name) const
 {
+	// you should be using strncpy to prevent buffer overflows
 	strcpy(name, this->name);
 }
 
-void data::getPhone(char * phone) const
+const char* data::getPhone(const char* /* always use const char* unless you plan on editing the pointer when it comes in */ phone) const
 {
-	strcpy(phone, this->phone);
+	// you should be using strncpy to prevent buffer overflows
+	// you should be returning const char*'s to your array
+	
+	return this->phone;
 }
 
 void data::getProduct(char * product) const
 {
+	// you should be using strncpy to prevent buffer overflows
 	strcpy(product, this->product);
+	// these "getters" are broken
+	// you should be returning const char*'s to your array
 }
 
 void data::getEvents(char * events) const
 {
+	
 	strcpy(events, this->events);
 }
 
